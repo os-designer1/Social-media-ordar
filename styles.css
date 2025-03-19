@@ -397,6 +397,13 @@ body {
     padding: 20px;
     text-align: center;
     color: #ffffff;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: opacity 2s ease, transform 1s ease;
+}
+.product.active{
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .product img {
