@@ -135,15 +135,6 @@
 
 
 
-
-        
-
-
-
-
-
-
-
         <div class="comparison-section">
             <div class="comparison-header">
                 <h1>تصميمات مصممه من قبل</h1>
@@ -251,7 +242,7 @@
          <script src="scrept.js" ></script>
          <script>
             // استيراد مكتبة EmailJS
-emailjs.init('_ubIcUNvQZ3-Gv0Cl');
+            emailjs.init('djmDvTd_C6wCy4VqG'); // ← هنا المفتاح العام الخاص بك
 
 // ربط زر الإرسال والنموذج
 const btn = document.getElementById('button');
@@ -277,8 +268,8 @@ document.getElementById('form').addEventListener('submit', function (event) {
 
     btn.innerText = 'جاري الإرسال...';
 
-    const serviceID = 'default_service'; // معرف الخدمة
-    const templateID = 'template_8jz7qt1'; // معرف القالب
+    const serviceID = "service_k7l5uhz";
+    const templateID = "template_g0zprua";
 
     emailjs.sendForm(serviceID, templateID, this)
         .then(() => {
