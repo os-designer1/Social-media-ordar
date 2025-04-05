@@ -242,7 +242,7 @@
          <script src="scrept.js" ></script>
          <script>
             // استيراد مكتبة EmailJS
-            emailjs.init('djmDvTd_C6wCy4VqG'); // ← هنا المفتاح العام الخاص بك
+            emailjs.init('djmDvTd_C6wCy4VqG')
 
 // ربط زر الإرسال والنموذج
 const btn = document.getElementById('button');
@@ -268,8 +268,8 @@ document.getElementById('form').addEventListener('submit', function (event) {
 
     btn.innerText = 'جاري الإرسال...';
 
-    const serviceID = "service_k7l5uhz";
-    const templateID = "template_g0zprua";
+    const serviceID = 'default_service';
+    const templateID = 'template_6mrcbbq';
 
     emailjs.sendForm(serviceID, templateID, this)
         .then(() => {
