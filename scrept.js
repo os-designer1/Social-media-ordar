@@ -12,8 +12,6 @@ function toggleNav() {
 }
 
 
-
-
 document.addEventListener("DOMContentLoaded", function () {
     const columns = document.querySelectorAll(".footer-column h4");
     columns.forEach(column => {

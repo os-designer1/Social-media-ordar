@@ -46,6 +46,9 @@
 </head>
 <body>
 
+
+
+
         <div class="header">
         <a href="https://os-designer1.github.io/OS-Designer/"> <img src="logo.png" alt="لوجو الموقع" class="logo"> </a><!-- هنا ضع رابط الصورة -->
         <div class="nav" id="nav">
@@ -55,29 +58,329 @@
            <a href="https://os-designer1.github.io/OS-Designer-logo-Teshrt-Designer/">لوجو علي تيشرت</a>
            <a href="https://os-designer1.github.io/OS-Designer-pepar-Designer/">خدمات الورقيه </a>
            <a href="https://os-designer1.github.io/support/">الدعم</a>
-        </div>    <a href="https://os-designer1.github.io/login/" class="account-icon" title="حسابي"  >
+        </div>  
+          <a href="https://os-designer1.github.io/login/" class="account-icon" title="حسابي"  >
             <i class="fas fa-user"></i>
         </a>
-        <style>
-
-        .account-icon{
-          color: #ffffff;
-          font-size: 20px;
-          cursor: pointer;
-           margin-left: 20px;
-          align-items: center;
-        }
-
-            @media (max-width:834px){
-                .account-icon{
-                   margin-left: 160px;
-                   margin-top: 5px;
-                }
-            }
-        </style>
-        
-      
+        <!-- أيقونة السلة -->
+<div class="cart-icon" onclick="toggleCart()">
+    <i class="fas fa-bag-shopping"></i>
+    <span class="cart-count" id="cart-count">0</span>
+</div>
+ 
+             
         <div class="menu-icon" onclick="toggleNav()">☰</div>
+
+        
+<!-- السلة الجانبية -->
+<div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cart-sidebar">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h2>سلة المشتريات</h2>
+        <span class="close-cart" onclick="toggleCart()">&times;</span>
+    </div>
+    <div id="cart-items" style="flex-direction: column;">
+        <!-- العناصر تظهر هنا -->
+    </div>
+    <div class="cart-total" style="position: sticky; bottom: 20px; left: 20px; right: 20px; background: #fff; padding: 15px 0 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.03); text-align: center;">
+        المجموع: <span id="cart-total">0</span> جنيه
+    </div>
+    <button id="send-order-btn" style="width:100%;background:#007bff;color:#fff;font-size:18px;padding:12px 0;border:none;border-radius:8px;cursor:pointer;margin-top:18px;transition:background 0.2s;">
+        <i class="fas fa-paper-plane" style="margin-left:8px;"></i>ارسال الطلبات
+    </button>
+
+</div>
+
+<style>
+    
+.form-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field {
+    border: 2px solid #444;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background: #2a2a2a;
+    color: #ffffff;
+    margin: 20px;
+}
+
+.input-field:focus {
+    border-color: #1e90ff;
+    box-shadow: 0 0 8px rgba(30, 144, 255, 0.3);
+}
+
+
+.submit-btn {
+    background: #00a2ff;
+    color: #ffffff;
+    font-size: 1rem;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+    margin: 20px;
+}
+.note{
+    margin: 0 23px;
+}
+.submit-btn:hover {
+    background: #00498d;
+    box-shadow: 0 4px 12px #00aeffbd;
+}
+
+.form-note {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #cccccc;
+}
+
+@media (max-width: 480px) {
+    .order-container {
+        padding: 15px;
+    }
+
+    .form-title {
+        font-size: 1.2rem;
+    }
+}
+
+
+.cart-icon {
+    position: relative;
+    display: inline-block;
+    margin-left: 20px;
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+.cart-count {
+    position: absolute;
+    top: 5px;
+    right: -8px;
+    background: #313131;
+    color: #ffffff;
+    border-radius: 50%;
+    font-size: 12px;
+    padding: 1px 7px;
+}
+.cart-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.3);
+    
+    z-index: 1001;
+}
+.cart-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 340px;
+    max-width: 90vw;
+    height: 100%;
+    background: #fff;
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.849);
+    
+    z-index: 1002;
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+    padding: 30px 20px 20px 20px;
+    overflow-y: auto;
+    direction: rtl;
+    color: #000000;
+}
+.cart-sidebar.active {
+    transform: translateX(0);
+}
+.close-cart {
+    font-size: 40px;
+    cursor: pointer;
+    color: #ff1900;
+}
+.cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #000000;
+    padding-bottom: 10px;
+}
+.cart-item img {
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+    margin-left: 12px;
+    border-radius: 8px;
+    border: 1px solid #000000;
+}
+.cart-item .notes {
+    color: #666;
+    font-size: 14px;
+    margin: 5px 0;
+    padding: 5px;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+@media (max-width: 600px) {
+    .cart-sidebar {
+        width: 95vw;
+        padding: 15px 5vw 15px 5vw;
+    }
+    .cart-icon {
+        margin-left: 0px;
+        font-size: 18px;
+    }
+
+}
+
+
+</style>
+
+<script>
+        document.getElementById('send-order-btn').onmouseover = function() {
+        this.style.background = '#0056b3';
+    };
+    document.getElementById('send-order-btn').onmouseout = function() {
+        this.style.background = '#007bff';
+    };
+// متغير السلة
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+// دالة إضافة المنتج مع الملاحظات
+function addToCart(id, name, price, image, notes = '') {
+    const displayName = notes ? `${name} (${notes})` : name;
+    
+    // البحث عن منتج مطابق (نفس الاسم، السعر، الصورة، الملاحظات)
+    const existingItem = cart.find(item => 
+        item.name === name && 
+        item.price === Number(price) && 
+        item.image === image &&
+        item.notes === notes
+    );
+
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            id: id + Date.now(), // إنشاء معرف فريد
+            name,
+            displayName,
+            price: Number(price),
+            image,
+            quantity: 1,
+            notes
+        });
+    }
+    
+    updateCart();
+    alert(`تم إضافة ${displayName} إلى السلة`);
+}
+
+// دالة إضافة المنتج المحدد مع الملاحظات
+function addSelectedProductWithNotes(selectId, notesId) {
+    const select = document.getElementById(selectId);
+    const notesInput = document.getElementById(notesId);
+    const selectedValue = select.value;
+    const notes = notesInput.value.trim();
+    
+    if (!selectedValue) {
+        alert("الرجاء اختيار منتج أولاً");
+        return;
+    }
+    
+    const [id, name, price, image] = selectedValue.split('|');
+    addToCart(id, name, price, image, notes);
+    
+    // إفراغ حقل الملاحظات بعد الإضافة
+    notesInput.value = '';
+}
+
+// دالة حذف المنتج
+function removeFromCart(id) {
+    cart = cart.filter(item => item.id !== id);
+    updateCart();
+}
+
+// دالة تحديث الكمية
+function updateQuantity(id, newQuantity) {
+    const item = cart.find(item => item.id === id);
+    if (item) {
+        item.quantity = Math.max(1, newQuantity);
+        updateCart();
+    }
+}
+
+// دالة عرض/إخفاء السلة
+function toggleCart() {
+    const sidebar = document.getElementById('cart-sidebar');
+    sidebar.classList.toggle('active');
+    document.getElementById('cart-overlay').style.display = 
+        sidebar.classList.contains('active') ? 'block' : 'none';
+}
+
+function updateCart() {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById('cart-count').textContent = totalItems;
+    
+    const cartItems = document.getElementById('cart-items');
+    const totalElement = document.getElementById('cart-total');
+    let total = 0;
+    
+    cartItems.innerHTML = '';
+    
+    if (cart.length === 0) {
+        cartItems.innerHTML = '<p style="text-align:center; color:#888;">السلة فارغة</p>';
+    } else {
+        cart.forEach(item => {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'cart-item';
+            itemElement.innerHTML = `
+                <img src="${item.image}" alt="${item.name}" 
+                     onerror="this.src='https://via.placeholder.com/100'">
+                <div style="flex:1;">
+                    <h4>${item.name}</h4>
+                    ${item.notes ? `<p class="notes">${item.notes}</p>` : ''}
+                    <p>${item.price} جنيه</p>
+                    <div class="cart-controls">
+                        <button onclick="updateQuantity('${item.id}', ${item.quantity - 1})" style="border:none;border-radius:50%;width:28px;height:28px;font-size:18px;color:#000;cursor:pointer;margin:0 5px;">-</button>
+                            <span style="display:inline-block;min-width:24px;text-align:center;font-weight:bold;font-size:16px;color:#222;background:#f7f7f7;border-radius:6px;padding:3px 8px;margin:0 2px;">${item.quantity}</span>
+                            <button onclick="updateQuantity('${item.id}', ${item.quantity + 1})" style=";border:none;border-radius:50%;width:28px;height:28px;font-size:18px;color:#000;cursor:pointer;margin:0 5px;">+</button>
+                         <button onclick="removeFromCart('${item.id}')" style="background:none;border:none;cursor:pointer;color:red;font-size:18px; padding: 0 5px;" title="حذف">
+                                <i class="fas fa-trash"></i>
+                            </button>   
+                    </div>
+                </div>
+            `;
+            cartItems.appendChild(itemElement);
+            total += item.price * item.quantity;
+        });
+    }
+    
+    totalElement.textContent = total;
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+// تحميل السلة عند بدء الصفحة
+window.onload = function() {
+    updateCart();
+    
+    // إضافة حدث لإدخال الملاحظات
+    document.getElementById('notes').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addSelectedProductWithNotes('iphone-options', 'notes');
+        }
+    });
+};
+</script>
         </div>
 
         <div class="header2">
@@ -93,7 +396,6 @@
 
             </div>
           </div>
-
 
         <div class="container">
             <div class="image-section">
@@ -117,71 +419,37 @@
                     
                 </div>
                 
-
-
                 <div class="order-container">
                     <form id="form" class="order-form">
                         <h2 class="form-title">طلب تصميم جديد</h2>
                 
-                        <div class="form-group">
-                            <label class="form-label">
-                                <input class="input-field" type="text" name="name" placeholder=" " required>
-                                <span class="input-placeholder">الاسم الكامل</span>
-                            </label>
-                        </div>
-                
-                        <div class="form-group">
-                            <label class="form-label">
-                                <input class="input-field" type="number" name="phone" placeholder=" " required>
-                                <span class="input-placeholder">رقم الهاتف</span>
-                            </label>
-                        </div>
-                        <script>
-                            // عند تحميل الصفحة، قم باسترجاع رقم الهاتف والاسم من Local Storage
-                            document.addEventListener('DOMContentLoaded', () => {
-                                const loggedInUserPhone = localStorage.getItem('loggedInUserPhone'); // استرجاع رقم الهاتف من Local Storage
-                                const loggedInUserName = localStorage.getItem('loggedInUserName'); // استرجاع الاسم من Local Storage
 
-                                const phoneInput = document.querySelector('.input-field[name="phone"]'); // استهداف حقل رقم الهاتف
-                                const nameInput = document.querySelector('.input-field[name="name"]'); // استهداف حقل الاسم
 
-                                if (loggedInUserPhone && phoneInput) {
-                                    phoneInput.value = loggedInUserPhone; // تعبئة الحقل برقم الهاتف
-                                }
 
-                                if (loggedInUserName && nameInput) {
-                                    nameInput.value = loggedInUserName; // تعبئة الحقل بالاسم
-                                }
+<div class="form-group" style="min-width:220px; ">
 
-                                if (!loggedInUserPhone || !loggedInUserName) {
-                                    console.log('لم يتم العثور على بيانات المستخدم المسجل.');
-                                }
-                            });
-                        </script>
-                        
-                        <div class="form-group">
-                            <label class="form-label">
-                                <select class="input-field" name="designType" required>
-                                    <option value="" disabled selected>اختر نوع التصميم</option>
-                                    <option value="تصميم سوشال ميديا">تصميم سوشال ميديا</option>
-                                    <option value="صوره مصغره">صوره مصغره</option>
-                                    <option value="بوستر فرح">بوستر فرح</option>
+    <!-- منتج مع خيارات -->
+<div class="product">
 
-                                </select>
-                                <span class="input-placeholder">نوع التصميم</span>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label  for="quantity">الكمية</label>
-                            <input class="input-field" type="number" id="quantity" name="quantity" min="1" value="1">
-                          </div>
-                        <div class="form-group">
-                            <label for="notes">ملاحظات إضافية</label>
-                            <textarea class="input-field" id="notes" name="notes" rows="3"></textarea>
-                          </div>
+    <select id="iphone-options" class="input-field">
+        <option value="" disabled selected>نوع تصميمك</option>
+        <option value="سوشال ميديا| سوشال ميديا|100|https://os-designer1.github.io/Social-media-ordar/os.jpg">سوشال ميديا</option>
+        <option value="صوره مصغره| صوره مصغره|100|https://os-designer1.github.io/Social-media-ordar/me osos.png">صوره مصغره</option>
+        <option value="بسترات افراح| بسترات افراح|100|https://os-designer1.github.io/Social-media-ordar/osos.jpg">بسترات افراح</option>
+    </select>
+    
+
+</div>
+
+
+<div class="form-group">
+    <label for="notes" class="note">ملاحظات إضافية</label>
+    <textarea class="input-field" id="notes" name="notes" rows="3" placeholder="اكتب ملاحظتك"></textarea>
+</div>
+
+<button class="submit-btn" onclick="addSelectedProductWithNotes('iphone-options', 'notes')">أضف إلى السلة</button>
                         <input type="hidden" name="location" id="location">
-                
-                        <button class="submit-btn" id="button">إرسال الطلب</button>
+
                         <p class="form-note">سيتم التواصل معك في أقرب وقت من خلال رقم هاتفك</p>
                     </form>
                 </div>
@@ -192,7 +460,7 @@
             </div>
         </div>
 
-
+</div>
 
 
 
@@ -205,67 +473,19 @@
                 <img src="عوضوا الي راح رجاءا لان مليت من التحفيل🗿👋🏻.jpg" alt="لوجو 5">
                 <img src="Team Todak MLBB Poster.jpg" alt="لوجو 6">
                 <img src="1.jpg" alt="لوجو 1">
-
                 <img src="Official Football Matchdays - Sports Design.jpg" alt="لوجو 7">
+                <img src="osos.jpg" alt="لوجو 7">
               <!-- زود صورك هنا -->
             </div>
           </div>
 
          
-        <div class="done-ordar">
-            <h1 class="done-ordar-h1">ثق  في تواصلنا</h1>
-            <p class="done-ordar-p">موعدنا مظبوته و تسلمنا في معادو!</p>
-        <img src="done-ordar.webp" class="img-done-ordar">
-
-       </div>
+       
       
      
 
          <script src="scrept.js" ></script>
-         <script>
-            // استيراد مكتبة EmailJS
-            emailjs.init('djmDvTd_C6wCy4VqG')
-
-// ربط زر الإرسال والنموذج
-const btn = document.getElementById('button');
-const locationInput = document.getElementById('location');
-
-// جلب الموقع الجغرافي عند تحميل الصفحة
-if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(position => {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
-        locationInput.value = `https://www.google.com/maps?q=${lat},${lng}`;
-    }, error => {
-        console.error("لم يتمكن من تحديد الموقع:", error);
-        locationInput.value = "لم يتمكن من تحديد الموقع";
-    });
-} else {
-    locationInput.value = "المتصفح لا يدعم تحديد الموقع";
-}
-
-// عند إرسال النموذج
-document.getElementById('form').addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    btn.innerText = 'جاري الإرسال...';
-
-    const serviceID = 'default_service';
-    const templateID = 'template_6mrcbbq';
-
-    emailjs.sendForm(serviceID, templateID, this)
-        .then(() => {
-            btn.innerText = 'إرسال الطلب';
-            alert('✅ تم إرسال الطلب بنجاح!');
-            document.getElementById('form').reset();
-        }, (err) => {
-            btn.innerText = 'إرسال الطلب';
-            alert('❌ حدث خطأ، يرجى المحاولة مرة أخرى.');
-            console.error("Error:", err);
-        });
-});
-
-         </script>
+         
  <footer class="footer">
     <div class="footer-top">
         <a href="https://os-designer1.github.io/OS-Designer/" class="footer-logo">
@@ -301,128 +521,5 @@ document.getElementById('form').addEventListener('submit', function (event) {
         <span class="country">مصر | Egypt</span>
     </div>
 </footer>
-     <style>
-    .footer {
-    padding: 50px;
-        background: #1c1c1c;
-        color: #fff;
-        padding: 20px;
-        text-align: right;
-        direction: rtl;
-    }
-    .footer-top {
-        padding-right: 95px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-    .footer-top img{
-        width: 40px;
-    }
-    .footer-container {
-        padding-left: 50px;
-        padding-right: 100px;
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
-    .footer-column {
-        width: 22%;
-    }
-    .footer-column h4 {
-        cursor: pointer;
-        margin-bottom: 10px;
-        transition: color 0.3s ease;
-    }
-    .footer-column h4:hover {
-        color: #d4d4d4;
-    }
-    .footer-list {
-        list-style: none;
-        padding: 0;
-        display: block;
-        transition: max-height 0.3s ease-out;
-    }
-    .footer-column ul li a {
-        font-size: 18px;
-        color: #ccc;
-        text-decoration: none;
-    }
-    .footer-column ul li a:hover {
-        text-decoration: underline;
-        color: #fff;
-    }
-    .footer-bottom {
-        text-align: center;
-        margin-top: 60px;
-        border-top: 1px solid #ccc;
-        padding-top: 10px;
-        font-size: 14px;
-        color: #666;
-    }
-
-    .footer-bottom a {
-        margin: 0 10px;
-        text-decoration: none;
-        color: #ffffff;
-    }
-
-    .footer-bottom a:hover {
-        text-decoration: underline;
-        color: #ffffff;
-    }
-
-    .footer-bottom .country {
-        color: #ccc;
-        margin-right: 300px;
-    }
-
-    .footer-bottom span {
-        color: #cecece;
-    }
-
-    @media (max-width: 768px) {
-        .footer-bottom .country {
-            font-size: 12px;
-            display: block;
-            margin: 10px 0 0 0;
-        }
-    }
-    @media (max-width: 768px) {
-        .footer-top{
-            padding-right: 0px;
-            padding-top: 10px;
-        }
-        .footer-container {
-            padding: 10px;
-            flex-direction: column;
-        }
-        .footer-top img{
-        width: 30px;
-    }
-        .footer-column {
-            width: 100%;
-        }
-        .footer-list {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
-        .footer-column h4::after {
-            content: " ▼";
-            float: left;
-            transition: transform 0.3s ease;
-        }
-        .footer-column.open h4::after {
-            content: " ▲";
-        }
-        .footer-column.open .footer-list {
-            max-height: 500px; /* Adjust as needed */
-        }
-    }
-
-
-
-    </style></body>
+</body>
  </html>
