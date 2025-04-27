@@ -66,6 +66,7 @@ body {
         padding: 20px;
         text-align: right; /* علشان نركز النص في شاشة الهاتف */
         height: 100vh;
+        margin: 40px 20px 0 ;
     }
   
     .nav.active {
