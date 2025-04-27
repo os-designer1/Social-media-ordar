@@ -385,74 +385,64 @@ body {
     }
 }
 
-.products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
 
-.product {
-    border-radius: 10px;
-    padding: 20px;
+
+.pinterest-container {
+    padding: 40px 20px;
     text-align: center;
+  }
+  
+  .pinterest-container h2 {
+    font-size: 60px;
+    margin-bottom: 30px;
     color: #ffffff;
-    opacity: 0;
-    transform: translateY(100px);
-    transition: opacity 2s ease, transform 1s ease;
-}
-.product.active{
-    opacity: 1;
-    transform: translateY(0);
-}
+  }
+  
+  .pinterest-grid {
+    column-count: 3;       /* عدد الأعمدة */
+    column-gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .pinterest-grid img {
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    display: block;
 
-.product img {
-    max-width: 70%;
-    height: auto;
-    border-radius: 10px;
-}
+    break-inside: avoid;   /* يمنع تقطيع الصورة بين الأعمدة */
+  }
+  
+  @media (max-width: 768px) {
+    .pinterest-grid {
+      column-count: 2;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .pinterest-container{
+        padding: 0;
+    }
+    .pinterest-container h2 {
+        font-size: 25px;
+    }
+    .text-h1-section-4{
+        font-size: 35px;
+    }
+    .pinterest-grid {
+      column-count: 1;
+    }
+    .pinterest-grid img {
+        width: 80%;
+        margin: 20px auto;
+      }
+  }
 
-.product h2 {
-    font-size: 18px;
-    margin: 15px 0 10px;
-}
 
-.product p {
-    margin: 5px 0;
-    font-size: 20px;
-    color: #cccccc;
-}
 
-.product .price {
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffffff;
-}
 
-.features {
-    margin-top: 15px;
-}
 
-.features p {
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.color-dots {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-    margin-top: 10px;
-}
-
-.color-dots span {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: inline-block;
-}
 
 .done-ordar {
     background-color: #161616;
